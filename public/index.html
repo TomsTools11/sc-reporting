@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Supreme Choice Insurance Solutions — Campaign Recommendations</title>
+<title>Supreme Choice Insurance Solutions — Campaign Recommendations (Updated)</title>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
@@ -26,6 +26,8 @@
     --gray-700: #374151;
     --gray-800: #1F2937;
     --gray-900: #111827;
+    --purple: #7C3AED;
+    --purple-bg: #F5F3FF;
     --radius: 10px;
     --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
     --shadow-md: 0 4px 12px rgba(0,0,0,0.06), 0 2px 4px rgba(0,0,0,0.04);
@@ -40,8 +42,6 @@
     -webkit-font-smoothing: antialiased;
   }
   .container { max-width: 880px; margin: 0 auto; padding: 32px 24px 64px; }
-
-  /* === HEADER === */
   .header {
     background: linear-gradient(135deg, var(--goal-blue) 0%, var(--goal-blue-dark) 100%);
     color: white;
@@ -60,8 +60,11 @@
   .header-meta { display: flex; gap: 20px; margin-top: 18px; flex-wrap: wrap; }
   .header-meta span { font-size: 13px; opacity: 0.7; }
   .header-meta strong { opacity: 1; font-weight: 600; }
-
-  /* === SECTIONS === */
+  .header .version-badge {
+    display: inline-block; margin-top: 14px; padding: 4px 12px;
+    background: rgba(255,255,255,0.15); border-radius: 14px;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.5px;
+  }
   .section {
     background: white;
     border-radius: var(--radius);
@@ -73,18 +76,10 @@
     padding: 20px 28px 16px;
     border-bottom: 1px solid var(--gray-100);
   }
-  .section-head h2 {
-    font-size: 17px; font-weight: 700; color: var(--gray-900);
-  }
-  .section-head p {
-    font-size: 13px; color: var(--gray-500); margin-top: 2px;
-  }
+  .section-head h2 { font-size: 17px; font-weight: 700; color: var(--gray-900); }
+  .section-head p { font-size: 13px; color: var(--gray-500); margin-top: 2px; }
   .section-body { padding: 24px 28px 28px; }
-
-  /* === SUMMARY BLOCK === */
-  .summary-text {
-    font-size: 15px; line-height: 1.8; color: var(--gray-700);
-  }
+  .summary-text { font-size: 15px; line-height: 1.8; color: var(--gray-700); }
   .summary-text strong { color: var(--gray-900); }
   .finding-box {
     background: var(--red-bg); border: 1px solid rgba(220,38,38,0.12);
@@ -95,8 +90,18 @@
     text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 6px;
   }
   .finding-box p { font-size: 14px; color: var(--gray-700); line-height: 1.65; }
-
-  /* === METRIC STRIP === */
+  .investigation-box {
+    background: var(--purple-bg); border: 1px solid rgba(124,58,237,0.12);
+    border-radius: var(--radius); padding: 18px 22px; margin-top: 16px;
+  }
+  .investigation-box h4 {
+    color: var(--purple); font-size: 12px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 6px;
+  }
+  .investigation-box p { font-size: 14px; color: var(--gray-700); line-height: 1.65; }
+  .investigation-box ul {
+    margin: 8px 0 0 18px; font-size: 14px; color: var(--gray-700); line-height: 1.8;
+  }
   .metric-strip {
     display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 8px;
   }
@@ -106,6 +111,7 @@
   }
   .metric-item.alert { border-color: var(--red); background: var(--red-bg); }
   .metric-item.good { border-color: var(--goal-blue); background: var(--goal-blue-light); }
+  .metric-item.neutral { border-color: var(--gray-300); background: var(--gray-50); }
   .metric-item .label {
     font-size: 10px; font-weight: 700; text-transform: uppercase;
     letter-spacing: 0.7px; color: var(--gray-500); margin-bottom: 3px;
@@ -116,14 +122,13 @@
   .metric-item .delta { font-size: 11px; font-weight: 600; margin-top: 2px; }
   .down { color: var(--red); }
   .up { color: var(--green); }
-
-  /* === REC CARDS === */
   .rec-group-title {
     font-size: 13px; font-weight: 700; text-transform: uppercase;
     letter-spacing: 0.8px; color: var(--gray-500); margin-bottom: 14px;
     padding-bottom: 8px; border-bottom: 2px solid var(--gray-100);
   }
   .rec-group-title.priority { color: var(--goal-blue); border-color: var(--goal-blue); }
+  .rec-group-title.investigate { color: var(--purple); border-color: var(--purple); }
   .rec-group-title.monitor { color: var(--amber); border-color: var(--amber); }
   .rec-group-title.stable { color: var(--green); border-color: var(--green); }
   .rec-card {
@@ -133,7 +138,8 @@
   }
   .rec-card:hover { box-shadow: var(--shadow-md); }
   .rec-card.action { border-left-color: var(--goal-blue); }
-  .rec-card.investigate { border-left-color: var(--amber); }
+  .rec-card.investigate-card { border-left-color: var(--purple); }
+  .rec-card.watch { border-left-color: var(--amber); }
   .rec-card.hold { border-left-color: var(--green); }
   .rec-top {
     display: flex; align-items: center; justify-content: space-between;
@@ -145,11 +151,10 @@
     font-size: 11px; font-weight: 700; white-space: nowrap;
   }
   .badge.blue { background: var(--goal-blue-light); color: var(--goal-blue-dark); }
+  .badge.purple { background: var(--purple-bg); color: var(--purple); }
   .badge.amber { background: var(--amber-bg); color: var(--amber); }
   .badge.green { background: var(--green-bg); color: var(--green); }
-  .rec-why {
-    font-size: 14px; color: var(--gray-600); line-height: 1.65; margin-bottom: 12px;
-  }
+  .rec-why { font-size: 14px; color: var(--gray-600); line-height: 1.65; margin-bottom: 12px; }
   .change-pill {
     display: inline-flex; align-items: center; gap: 8px;
     background: var(--goal-blue-light); color: var(--goal-blue-dark);
@@ -158,28 +163,25 @@
     font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
   }
   .change-pill .arrow { font-size: 18px; }
-
-  /* === IMPACT TABLE === */
-  .data-wrap { overflow-x: auto; }
-  table.clean {
-    width: 100%; border-collapse: collapse; font-size: 13px;
+  .conditional-note {
+    margin-top: 10px; padding: 10px 14px; background: var(--amber-bg);
+    border: 1px solid rgba(217,119,6,0.12); border-radius: 8px;
+    font-size: 12px; color: var(--amber); font-weight: 600;
   }
+  .data-wrap { overflow-x: auto; }
+  table.clean { width: 100%; border-collapse: collapse; font-size: 13px; }
   table.clean thead th {
     background: var(--gray-50); color: var(--gray-500); font-weight: 700;
     text-transform: uppercase; letter-spacing: 0.5px; font-size: 10px;
     padding: 10px 14px; text-align: left; border-bottom: 2px solid var(--gray-200);
     white-space: nowrap;
   }
-  table.clean tbody td {
-    padding: 11px 14px; border-bottom: 1px solid var(--gray-100);
-  }
+  table.clean tbody td { padding: 11px 14px; border-bottom: 1px solid var(--gray-100); }
   table.clean tbody tr:last-child td { border-bottom: none; }
   table.clean tbody tr:hover { background: var(--gray-50); }
   .r { text-align: right; }
   .mono { font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace; font-size: 12px; }
   .highlight-row { background: var(--goal-blue-light) !important; }
-
-  /* === POSITION BARS === */
   .pos-bar { margin-bottom: 18px; }
   .pos-label {
     display: flex; justify-content: space-between; align-items: baseline;
@@ -203,8 +205,6 @@
   }
   .pos-legend-item { display: flex; align-items: center; gap: 5px; }
   .pos-dot { width: 8px; height: 8px; border-radius: 3px; }
-
-  /* === OUTCOME BOX === */
   .outcome-box {
     background: var(--green-bg); border: 1px solid rgba(22,163,74,0.15);
     border-radius: var(--radius); padding: 18px 22px; margin-top: 20px;
@@ -214,30 +214,43 @@
     text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 6px;
   }
   .outcome-box p { font-size: 14px; color: var(--gray-700); line-height: 1.65; }
-
-  /* === FOOTER === */
+  .timeline { margin-top: 8px; }
+  .timeline-item { display: flex; gap: 16px; margin-bottom: 0; position: relative; }
+  .timeline-marker { display: flex; flex-direction: column; align-items: center; min-width: 28px; }
+  .timeline-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
+  .timeline-dot.done { background: var(--green); }
+  .timeline-dot.active { background: var(--goal-blue); box-shadow: 0 0 0 4px rgba(4,121,223,0.15); }
+  .timeline-dot.pending { background: var(--gray-300); }
+  .timeline-line { width: 2px; background: var(--gray-200); flex-grow: 1; margin: 4px 0; }
+  .timeline-content { padding-bottom: 22px; flex: 1; }
+  .timeline-item:last-child .timeline-content { padding-bottom: 0; }
+  .timeline-item:last-child .timeline-line { display: none; }
+  .timeline-label {
+    font-size: 12px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.5px; margin-bottom: 3px;
+  }
+  .timeline-label.done { color: var(--green); }
+  .timeline-label.active { color: var(--goal-blue); }
+  .timeline-label.pending { color: var(--gray-400); }
+  .timeline-text { font-size: 14px; color: var(--gray-700); line-height: 1.55; }
+  .timeline-text strong { color: var(--gray-900); }
+  .timeline-date { font-size: 11px; color: var(--gray-400); margin-top: 2px; }
   .footer {
     text-align: center; padding: 24px; color: var(--gray-400);
     font-size: 11px; margin-top: 16px; border-top: 1px solid var(--gray-200);
   }
   .footer a { color: var(--goal-blue); text-decoration: none; }
-
-  /* === NEXT STEPS === */
-  .next-steps {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 16px;
+  .change-strip { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 16px; }
+  .change-card {
+    border: 1px solid var(--gray-200); border-radius: 8px; padding: 14px 16px;
+    background: var(--gray-50);
   }
-  .step-card {
-    border: 1px solid var(--gray-200); border-radius: 8px; padding: 16px 18px;
+  .change-card .cc-label {
+    font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.7px; color: var(--gray-400); margin-bottom: 2px;
   }
-  .step-card .step-num {
-    font-size: 11px; font-weight: 700; color: var(--goal-blue);
-    text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 4px;
-  }
-  .step-card .step-text {
-    font-size: 13px; color: var(--gray-700); line-height: 1.55;
-  }
-  .step-card .step-text strong { color: var(--gray-900); }
-
+  .change-card .cc-val { font-size: 14px; font-weight: 600; color: var(--gray-800); }
+  .change-card .cc-detail { font-size: 12px; color: var(--gray-500); margin-top: 2px; }
   @media print {
     body { background: white; font-size: 12px; }
     .container { padding: 0; max-width: 100%; }
@@ -249,16 +262,13 @@
     .header h1 { font-size: 22px; }
     .section-body { padding: 18px 20px 22px; }
     .metric-strip { grid-template-columns: 1fr 1fr; }
-    .next-steps { grid-template-columns: 1fr; }
+    .change-strip { grid-template-columns: 1fr; }
     .rec-top { flex-direction: column; align-items: flex-start; }
   }
 </style>
 </head>
 <body>
-
 <div class="container">
-
-  <!-- ======== HEADER ======== -->
   <header class="header">
     <div class="logo-row">
       <span class="logo-dot"></span>
@@ -267,20 +277,22 @@
     <h1>Home Campaign Recommendations</h1>
     <p class="subtitle">Supreme Choice Insurance Solutions &mdash; California</p>
     <div class="header-meta">
-      <span>Prepared <strong>February 16, 2026</strong></span>
+      <span>Updated <strong>February 16, 2026</strong></span>
       <span>Account Manager <strong>Tom Panos</strong></span>
     </div>
+    <div class="version-badge">Updated after Feb 16 account review call</div>
   </header>
 
-  <!-- ======== WHAT WE FOUND ======== -->
   <div class="section">
     <div class="section-head">
-      <h2>What We Found</h2>
-      <p>Week-over-week snapshot of your Home campaign in California</p>
+      <h2>Situation Overview</h2>
+      <p>What happened and where things stand right now</p>
     </div>
     <div class="section-body">
-
-      <div class="metric-strip">
+      <p class="summary-text">
+        Your Home campaign in California experienced an <strong>abrupt drop in lead volume</strong>. This wasn't a gradual decline &mdash; it happened overnight, with daily volume going from a normal range of <strong>8&ndash;10 leads per day</strong> down to near-zero. That sudden change means something specific shifted, and we're working to determine exactly what.
+      </p>
+      <div class="metric-strip" style="margin-top: 20px;">
         <div class="metric-item good">
           <div class="label">Market Searches</div>
           <div class="val">3,598</div>
@@ -296,29 +308,72 @@
           <div class="val">0.63%</div>
           <div class="delta down">&#9660; Down from 2.24%</div>
         </div>
-        <div class="metric-item alert">
-          <div class="label">Avg Position</div>
-          <div class="val">9.05</div>
-          <div class="delta down">&#9660; Was 6.36</div>
+        <div class="metric-item neutral">
+          <div class="label">Normal Daily Volume</div>
+          <div class="val">8&ndash;10</div>
+          <div class="delta">Home leads per Monday</div>
         </div>
       </div>
-
       <div class="finding-box">
-        <h4>The Core Issue</h4>
-        <p>Demand in your market <strong>nearly doubled this week</strong>, but your lead volume dropped 47%. The problem isn't a lack of shoppers &mdash; competitors have raised their bids and pushed your ads further down the page. Your current base bid of <strong>$2.26</strong> is no longer competitive on most of your traffic sources.</p>
+        <h4>What the Data Shows</h4>
+        <p>Demand in your market <strong>nearly doubled this week</strong>, but your lead volume dropped 47%. At the same time, your win rate collapsed from 2.24% to 0.63% and your average position dropped from 6.36 to 9.05. This pattern is consistent with being outbid by competitors. <strong>However</strong>, the overnight nature of the drop suggests an additional factor may be at play beyond competitive bidding alone.</p>
       </div>
-
+      <div class="investigation-box">
+        <h4>Open Investigation</h4>
+        <p>Because the change was sudden rather than gradual, we're investigating whether something else contributed to the drop. Possibilities include:</p>
+        <ul>
+          <li><strong>Lost traffic provider</strong> &mdash; a source feeding opportunities into your campaign may have been disconnected</li>
+          <li><strong>Filter or targeting change</strong> &mdash; an upstream configuration change that restricted which opportunities you see</li>
+          <li><strong>Platform-side change</strong> &mdash; something on the GOAL side that altered how your campaign participates in auctions</li>
+        </ul>
+        <p style="margin-top: 10px;">We're reviewing all platform data with the GOAL operations team and will report back with findings before making any permanent bid changes.</p>
+      </div>
     </div>
   </div>
 
-  <!-- ======== WHERE YOU STAND VS. THE MARKET ======== -->
+  <div class="section">
+    <div class="section-head">
+      <h2>What's Been Done So Far</h2>
+      <p>Bid adjustments already made this week and their impact</p>
+    </div>
+    <div class="section-body">
+      <div class="change-strip">
+        <div class="change-card">
+          <div class="cc-label">Nick's Adjustments</div>
+          <div class="cc-val">Multipliers raised ~10%</div>
+          <div class="cc-detail">Tier adjustments: 94&rarr;104, 69&rarr;84</div>
+        </div>
+        <div class="change-card">
+          <div class="cc-label">Your Increase (Today)</div>
+          <div class="cc-val">150% of Nick's levels</div>
+          <div class="cc-detail">Plus day-parting change on a 1-hour window</div>
+        </div>
+      </div>
+      <div class="change-strip">
+        <div class="change-card">
+          <div class="cc-label">Early Results</div>
+          <div class="cc-val">2 Home leads by midday</div>
+          <div class="cc-detail">Both arrived after your bid increase &mdash; a signal that higher bids do help</div>
+        </div>
+        <div class="change-card">
+          <div class="cc-label">Auto Campaign</div>
+          <div class="cc-val">No issues</div>
+          <div class="cc-detail">Auto leads flowing normally &mdash; the problem is isolated to Home</div>
+        </div>
+      </div>
+      <div class="finding-box" style="background: var(--amber-bg); border-color: rgba(217,119,6,0.12);">
+        <h4 style="color: var(--amber);">Key Takeaway</h4>
+        <p>The fact that leads started coming in after your bid increase suggests competitive positioning is <em>part</em> of the problem. But you shouldn't have to double your spend just to get back to normal &mdash; that points to something else having changed as well. We're not satisfied until we have a complete answer.</p>
+      </div>
+    </div>
+  </div>
+
   <div class="section">
     <div class="section-head">
       <h2>Where You Stand vs. the Market</h2>
       <p>Your effective bid compared to market pricing on each traffic source</p>
     </div>
     <div class="section-body">
-
       <div class="pos-bar">
         <div class="pos-label">
           <span class="name">Tier 1 &mdash; 17,693 opportunities</span>
@@ -326,7 +381,6 @@
         </div>
         <div class="pos-track"><div class="pos-fill red" style="width: 42%;"></div></div>
       </div>
-
       <div class="pos-bar">
         <div class="pos-label">
           <span class="name">Tier 3 &mdash; 3,127 opportunities</span>
@@ -334,7 +388,6 @@
         </div>
         <div class="pos-track"><div class="pos-fill red" style="width: 18%;"></div></div>
       </div>
-
       <div class="pos-bar">
         <div class="pos-label">
           <span class="name">Tier 2 &mdash; 954 opportunities</span>
@@ -342,7 +395,6 @@
         </div>
         <div class="pos-track"><div class="pos-fill red" style="width: 49%;"></div></div>
       </div>
-
       <div class="pos-bar">
         <div class="pos-label">
           <span class="name">Home Search &mdash; 1,556 opportunities</span>
@@ -350,7 +402,6 @@
         </div>
         <div class="pos-track"><div class="pos-fill amber" style="width: 62%;"></div></div>
       </div>
-
       <div class="pos-bar">
         <div class="pos-label">
           <span class="name">Home SearchB &mdash; 434 opportunities &#10003;</span>
@@ -358,33 +409,40 @@
         </div>
         <div class="pos-track"><div class="pos-fill amber" style="width: 55%;"></div></div>
       </div>
-
       <div class="pos-legend">
         <div class="pos-legend-item"><div class="pos-dot" style="background: var(--green);"></div> Top position</div>
         <div class="pos-legend-item"><div class="pos-dot" style="background: var(--goal-blue);"></div> 1st&ndash;2nd</div>
         <div class="pos-legend-item"><div class="pos-dot" style="background: var(--amber);"></div> 2nd&ndash;3rd</div>
         <div class="pos-legend-item"><div class="pos-dot" style="background: var(--red);"></div> Below 3rd (off the ad wall)</div>
       </div>
-
       <div class="finding-box" style="margin-top: 20px; background: var(--amber-bg); border-color: rgba(217,119,6,0.12);">
         <h4 style="color: var(--amber);">What This Means</h4>
-        <p>Your three highest-volume sources (Tier 1, Tier 3, and Tier 2) represent <strong>88% of all available opportunities</strong> and you're below the ad wall on all three. That's why volume is dropping &mdash; shoppers can't find your ads.</p>
+        <p>Your three highest-volume sources (Tier 1, Tier 3, and Tier 2) represent <strong>88% of all available opportunities</strong> and you're currently below the ad wall on all three. Regardless of what else caused the initial drop, your bids on these sources are no longer competitive.</p>
       </div>
-
     </div>
   </div>
 
-  <!-- ======== OUR RECOMMENDATIONS ======== -->
   <div class="section">
     <div class="section-head">
       <h2>Our Recommendations</h2>
-      <p>Specific changes to get your lead volume back on track</p>
+      <p>Pending confirmation that no other issues are found &mdash; per our discussion</p>
     </div>
     <div class="section-body">
+      <div class="rec-group-title investigate">Investigate First</div>
+      <div class="rec-card investigate-card">
+        <div class="rec-top">
+          <span class="rec-name">Platform &amp; Provider Audit</span>
+          <span class="badge purple">In Progress</span>
+        </div>
+        <p class="rec-why">
+          Before implementing any permanent bid changes, we're confirming with the GOAL operations team that no providers were lost, no filters changed, and nothing on the platform side is restricting your campaign. You asked us to look at all the data first &mdash; and we agree. If we find something, it may fix the volume issue without the need for significant bid increases.
+        </p>
+        <div class="conditional-note">
+          &#9888; All bid recommendations below are conditional &mdash; they will only be implemented after this investigation is complete and confirms no other issues.
+        </div>
+      </div>
 
-      <!-- Priority Changes -->
-      <div class="rec-group-title priority">Priority Changes</div>
-
+      <div class="rec-group-title priority" style="margin-top: 28px;">Priority Changes <span style="font-weight: 400; text-transform: none; letter-spacing: 0; font-size: 12px; color: var(--gray-400);">&mdash; pending investigation results</span></div>
       <div class="rec-card action">
         <div class="rec-top">
           <span class="rec-name">Raise Base Bid</span>
@@ -397,7 +455,6 @@
           $2.26 <span class="arrow">&rarr;</span> $3.75
         </div>
       </div>
-
       <div class="rec-card action">
         <div class="rec-top">
           <span class="rec-name">Tier 3 Multiplier</span>
@@ -410,7 +467,6 @@
           69% <span class="arrow">&rarr;</span> 100%
         </div>
       </div>
-
       <div class="rec-card action">
         <div class="rec-top">
           <span class="rec-name">Tier 2 Multiplier</span>
@@ -424,32 +480,27 @@
         </div>
       </div>
 
-      <!-- Monitor Items -->
       <div class="rec-group-title monitor" style="margin-top: 28px;">Items to Monitor</div>
-
-      <div class="rec-card investigate">
+      <div class="rec-card watch">
         <div class="rec-top">
           <span class="rec-name">Premium Referral</span>
           <span class="badge amber">Investigate</span>
         </div>
         <p class="rec-why">
-          Opportunities dropped from 1,504 last month to 164 this month &mdash; a 89% decline. This isn't a bidding issue. We're looking into whether a filter or targeting change caused this and will follow up with specifics.
+          Opportunities dropped from 1,504 last month to 164 this month &mdash; an 89% decline. This could be related to the sudden drop you described. We're including this in the platform audit.
         </p>
       </div>
-
-      <div class="rec-card investigate">
+      <div class="rec-card watch">
         <div class="rec-top">
           <span class="rec-name">Tier 3 Bid Rate</span>
           <span class="badge amber">Investigate</span>
         </div>
         <p class="rec-why">
-          Tier 3 only enters 6.74% of its auctions (211 out of 3,127). Even with the higher bid, the campaign will miss 93% of available inventory until we resolve the underlying targeting constraint. We'll review the filters and report back.
+          Tier 3 only enters 6.74% of its auctions (211 out of 3,127). Even with a higher bid, you'll miss 93% of available inventory until we resolve the underlying targeting constraint. Part of the platform audit.
         </p>
       </div>
 
-      <!-- Performing -->
       <div class="rec-group-title stable" style="margin-top: 28px;">Performing Well &mdash; No Changes</div>
-
       <div class="rec-card hold">
         <div class="rec-top">
           <span class="rec-name">Home SearchB</span>
@@ -459,18 +510,15 @@
           Your best source: 39.63% bid rate, 12.21% win rate, delivering 19 of your 58 leads this month from just 434 opportunities. The base bid increase will naturally boost this source further &mdash; no additional changes needed.
         </p>
       </div>
-
     </div>
   </div>
 
-  <!-- ======== PROJECTED IMPACT ======== -->
   <div class="section">
     <div class="section-head">
       <h2>Projected Impact</h2>
-      <p>How each source moves after implementing these changes</p>
+      <p>How each source moves after implementing these changes (if approved)</p>
     </div>
     <div class="section-body">
-
       <div class="data-wrap">
         <table class="clean">
           <thead>
@@ -535,49 +583,78 @@
           </tbody>
         </table>
       </div>
-
       <div class="outcome-box">
         <h4>Expected Outcome</h4>
-        <p>These changes move 5 of 6 sources into competitive market position. With <strong>88% of your opportunity pool</strong> shifting from "below the ad wall" to "competitive range," we expect a meaningful recovery in lead volume. Cost per lead will increase modestly as you move into stronger positions, which is normal and expected.</p>
+        <p>If the investigation confirms no platform-side issues, these changes move 5 of 6 sources into competitive market position. With <strong>88% of your opportunity pool</strong> shifting from "below the ad wall" to "competitive range," we expect a meaningful recovery toward your normal <strong>8&ndash;10 leads per day</strong>. Cost per lead will increase modestly as you move into stronger positions, which is normal and expected.</p>
       </div>
-
     </div>
   </div>
 
-  <!-- ======== NEXT STEPS ======== -->
   <div class="section">
     <div class="section-head">
-      <h2>Next Steps</h2>
+      <h2>What Happens Next</h2>
+      <p>Our agreed-upon plan from today's call</p>
     </div>
     <div class="section-body">
-      <div class="next-steps">
-        <div class="step-card">
-          <div class="step-num">Step 1</div>
-          <div class="step-text"><strong>Approve bid changes.</strong> Let us know if you'd like to proceed with the base bid increase to $3.75 and the multiplier adjustments on Tier 2 and Tier 3.</div>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-marker">
+            <div class="timeline-dot done"></div>
+            <div class="timeline-line"></div>
+          </div>
+          <div class="timeline-content">
+            <div class="timeline-label done">Complete</div>
+            <div class="timeline-text"><strong>Initial analysis complete.</strong> We've identified competitive positioning as a contributing factor and prepared bid recommendations.</div>
+            <div class="timeline-date">February 16, 2026</div>
+          </div>
         </div>
-        <div class="step-card">
-          <div class="step-num">Step 2</div>
-          <div class="step-text"><strong>We implement.</strong> Once approved, we'll make the changes in the GOAL Platform and confirm completion.</div>
+        <div class="timeline-item">
+          <div class="timeline-marker">
+            <div class="timeline-dot active"></div>
+            <div class="timeline-line"></div>
+          </div>
+          <div class="timeline-content">
+            <div class="timeline-label active">In Progress</div>
+            <div class="timeline-text"><strong>Platform &amp; provider audit.</strong> We're reviewing all platform data with the GOAL operations team to rule out lost providers, filter changes, or any other systemic issue that caused the overnight drop. We'll report back as soon as we have answers.</div>
+          </div>
         </div>
-        <div class="step-card">
-          <div class="step-num">Step 3</div>
-          <div class="step-text"><strong>Monitor for 7 days.</strong> We'll track win rate, lead volume, and cost daily to make sure the changes are producing results.</div>
+        <div class="timeline-item">
+          <div class="timeline-marker">
+            <div class="timeline-dot pending"></div>
+            <div class="timeline-line"></div>
+          </div>
+          <div class="timeline-content">
+            <div class="timeline-label pending">Pending Audit Results</div>
+            <div class="timeline-text"><strong>Implement bid changes.</strong> If the audit confirms no other issues, we'll proceed with the base bid increase ($2.26 &rarr; $3.75) and multiplier adjustments (Tier 3: 69% &rarr; 100%, Tier 2: 81% &rarr; 95%).</div>
+          </div>
         </div>
-        <div class="step-card">
-          <div class="step-num">Step 4</div>
-          <div class="step-text"><strong>Follow-up report.</strong> After 7 days, we'll send an updated analysis with actual results vs. projections and any fine-tuning recommendations.</div>
+        <div class="timeline-item">
+          <div class="timeline-marker">
+            <div class="timeline-dot pending"></div>
+            <div class="timeline-line"></div>
+          </div>
+          <div class="timeline-content">
+            <div class="timeline-label pending">After Implementation</div>
+            <div class="timeline-text"><strong>Monitor for 7 days.</strong> Track daily lead volume against the 8&ndash;10 per day baseline, monitor win rate recovery, and confirm cost per lead stays within expected range.</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-marker">
+            <div class="timeline-dot pending"></div>
+          </div>
+          <div class="timeline-content">
+            <div class="timeline-label pending">Follow-Up</div>
+            <div class="timeline-text"><strong>Updated report.</strong> After monitoring, we'll send an updated analysis with actual results vs. projections and any fine-tuning recommendations.</div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ======== FOOTER ======== -->
   <div class="footer">
     GOAL Platform &middot; Campaign Recommendations &middot; Confidential<br>
-    Prepared February 16, 2026 by Tom Panos &middot; <a href="https://goalplatform.com" target="_blank">goalplatform.com</a>
+    Updated February 16, 2026 after account review call &middot; Tom Panos &middot; <a href="https://goalplatform.com" target="_blank">goalplatform.com</a>
   </div>
-
 </div>
-
 </body>
 </html>
