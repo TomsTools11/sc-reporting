@@ -1,0 +1,1655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supreme Choice Insurance — Home CA Performance Analysis</title>
+    <style>
+        :root {
+            /* GOAL Brand Colors */
+            --goal-brand: #077BE5;
+            --goal-dark-blue: #00172D;
+            --goal-accent-1: #3AEECA;
+            --goal-accent-2: #97C2E8;
+            --goal-accent-3: #9FDACD;
+            --goal-light-grey: #F8F9FC;
+            --goal-text: #001020;
+
+            /* Additional UI Colors */
+            --neutral-gray: #6B7280;
+            --light-gray: #9CA3AF;
+            --border-gray: #E5E7EB;
+            --bg-track: #E5E7EB;
+            --white: #FFFFFF;
+            --success-green: #10B981;
+            --warning-red: #EF4444;
+            --warning-orange: #F59E0B;
+            --orange-light: #FCD34D;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+            background: var(--white);
+            color: var(--goal-text);
+            line-height: 1.5;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Header Section */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--goal-text);
+            margin-bottom: 4px;
+        }
+
+        .header p {
+            font-size: 14px;
+            color: var(--neutral-gray);
+        }
+
+        /* KPI Cards - Minimal Style */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+
+        .kpi-card {
+            background: var(--white);
+            border: 1px solid var(--border-gray);
+            border-radius: 8px;
+            padding: 24px;
+            text-align: center;
+        }
+
+        .kpi-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--goal-brand);
+            margin-bottom: 8px;
+        }
+
+        .kpi-value.green {
+            color: var(--goal-accent-1);
+        }
+
+        .kpi-value.success {
+            color: var(--success-green);
+        }
+
+        .kpi-label {
+            font-size: 13px;
+            color: var(--neutral-gray);
+        }
+
+        .kpi-comparison {
+            font-size: 12px;
+            color: var(--success-green);
+            margin-top: 4px;
+        }
+
+        .kpi-comparison.negative {
+            color: var(--warning-red);
+        }
+
+        /* Section */
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--goal-text);
+            margin-bottom: 20px;
+        }
+
+        /* Campaign Comparison Cards - Minimal Style */
+        .campaign-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .campaign-card {
+            background: var(--white);
+            border: 1px solid var(--border-gray);
+            border-radius: 8px;
+            padding: 24px;
+        }
+
+        .campaign-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .campaign-name {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--goal-text);
+        }
+
+        .campaign-badge {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--white);
+        }
+
+        .campaign-badge.blue {
+            background: var(--goal-brand);
+        }
+
+        .campaign-badge.orange {
+            background: var(--warning-orange);
+        }
+
+        .campaign-badge.green {
+            background: var(--goal-accent-1);
+            color: var(--goal-dark-blue);
+        }
+
+        .campaign-metric-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+        }
+
+        .campaign-metric-label {
+            font-size: 14px;
+            color: var(--neutral-gray);
+        }
+
+        .campaign-metric-value-group {
+            text-align: right;
+        }
+
+        .campaign-metric-value {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--goal-text);
+        }
+
+        .campaign-metric-comparison {
+            font-size: 12px;
+            color: var(--light-gray);
+            display: inline;
+            margin-right: 4px;
+        }
+
+        .campaign-metric-change {
+            display: inline;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .campaign-metric-change.positive {
+            color: var(--success-green);
+        }
+
+        .campaign-metric-change.negative {
+            color: var(--warning-red);
+        }
+
+        /* Chart Cards - Minimal Style */
+        .chart-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 32px;
+            margin-bottom: 40px;
+        }
+
+        .chart-card {
+            background: var(--white);
+            border: 1px solid var(--border-gray);
+            border-radius: 8px;
+            padding: 24px;
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .chart-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--goal-text);
+        }
+
+        .chart-subtitle {
+            font-size: 12px;
+            color: var(--neutral-gray);
+            margin-left: 6px;
+        }
+
+        .chart-badge {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--white);
+        }
+
+        .chart-badge.better {
+            background: var(--goal-accent-1);
+            color: var(--goal-dark-blue);
+        }
+
+        /* Horizontal Bar Charts - Minimal Clean Style */
+        .bar-chart {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .bar-group {
+            margin-bottom: 24px;
+        }
+
+        .bar-group-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--goal-text);
+            margin-bottom: 12px;
+        }
+
+        .bar-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .bar-label {
+            min-width: 100px;
+            font-size: 13px;
+            color: var(--neutral-gray);
+            font-weight: 500;
+        }
+
+        .bar-label.highlight {
+            color: var(--goal-text);
+            font-weight: 600;
+        }
+
+        .bar-container {
+            flex: 1;
+            height: 32px;
+            background: var(--bg-track);
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .bar {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.6s ease;
+        }
+
+        .bar.blue { background: var(--goal-brand); }
+        .bar.blue-light { background: var(--goal-accent-2); }
+        .bar.green { background: var(--goal-accent-1); }
+        .bar.orange { background: var(--warning-orange); }
+        .bar.orange-light { background: var(--orange-light); }
+
+        .bar-value {
+            min-width: 80px;
+            text-align: right;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--goal-text);
+        }
+
+        .bar-value.blue { color: var(--goal-brand); }
+        .bar-value.green { color: var(--goal-accent-1); }
+        .bar-value.orange { color: var(--warning-orange); }
+
+        /* Comparison Summary Below Charts */
+        .comparison-summary {
+            display: flex;
+            gap: 24px;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border-gray);
+        }
+
+        .comparison-item {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .comparison-label {
+            font-size: 11px;
+            color: var(--neutral-gray);
+        }
+
+        .comparison-value {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--goal-text);
+        }
+
+        /* Conversion Funnel - Minimal Style */
+        .funnel-container {
+            background: var(--white);
+            border: 1px solid var(--border-gray);
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 40px;
+        }
+
+        .funnel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .funnel-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--goal-text);
+        }
+
+        .funnel-badge {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            background: var(--goal-accent-1);
+            color: var(--goal-dark-blue);
+        }
+
+        .funnel {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .funnel-stage {
+            text-align: center;
+            flex: 1;
+            min-width: 80px;
+        }
+
+        .funnel-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--goal-brand);
+            margin-bottom: 4px;
+        }
+
+        .funnel-label {
+            font-size: 12px;
+            color: var(--neutral-gray);
+        }
+
+        .funnel-arrow {
+            font-size: 20px;
+            color: var(--light-gray);
+            flex-shrink: 0;
+        }
+
+        /* Metrics Table - Minimal Style */
+        .metrics-table {
+            background: var(--white);
+            border: 1px solid var(--border-gray);
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 40px;
+        }
+
+        .table-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+        }
+
+        .table-column {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .table-header {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--neutral-gray);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding-bottom: 12px;
+            display: grid;
+            grid-template-columns: 1fr auto;
+        }
+
+        .table-row {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            padding: 10px 0;
+            border-top: 1px solid var(--border-gray);
+        }
+
+        .table-metric {
+            font-size: 14px;
+            color: var(--goal-text);
+        }
+
+        .table-value {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--goal-brand);
+            text-align: right;
+        }
+
+        /* Summary Section - Minimal Style */
+        .summary-section {
+            background: var(--white);
+            border: 1px solid var(--border-gray);
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 40px;
+        }
+
+        .summary-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .summary-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--goal-text);
+            margin-bottom: 8px;
+        }
+
+        .summary-text {
+            font-size: 14px;
+            color: var(--neutral-gray);
+            line-height: 1.6;
+            flex: 1;
+            margin-right: 24px;
+        }
+
+        .summary-metrics {
+            display: flex;
+            gap: 24px;
+            flex-shrink: 0;
+        }
+
+        .summary-metric {
+            text-align: center;
+        }
+
+        .summary-metric-value {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .summary-metric-value.roi { color: var(--goal-accent-1); }
+        .summary-metric-value.revenue { color: var(--goal-brand); }
+
+        .summary-metric-label {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .summary-metric-label.roi { color: var(--goal-accent-1); }
+        .summary-metric-label.revenue { color: var(--goal-brand); }
+
+        /* ===================================================
+           SOURCE PERFORMANCE TABLE
+           For displaying traffic source breakdowns with
+           status indicators and bid multiplier data
+           =================================================== */
+        .source-table-container {
+            background: var(--white);
+            border: 1px solid var(--border-gray);
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 40px;
+            overflow-x: auto;
+        }
+
+        .source-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        .source-table thead th {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--neutral-gray);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 10px 12px;
+            text-align: left;
+            border-bottom: 2px solid var(--border-gray);
+            white-space: nowrap;
+        }
+
+        .source-table thead th.numeric {
+            text-align: right;
+        }
+
+        .source-table tbody tr {
+            border-bottom: 1px solid var(--border-gray);
+            transition: background-color 0.15s ease;
+        }
+
+        .source-table tbody tr:hover {
+            background-color: var(--goal-light-grey);
+        }
+
+        .source-table tbody td {
+            padding: 12px;
+            color: var(--goal-text);
+            vertical-align: middle;
+        }
+
+        .source-table tbody td.numeric {
+            text-align: right;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .source-table tbody td.source-name {
+            font-weight: 600;
+            max-width: 220px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        /* Status indicator dot */
+        .status-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+
+        .status-dot.green { background-color: var(--success-green); }
+        .status-dot.amber { background-color: var(--warning-orange); }
+        .status-dot.red { background-color: var(--warning-red); }
+        .status-dot.gray { background-color: var(--light-gray); }
+
+        /* Status badge (pill) */
+        .status-badge {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .status-badge.performing {
+            background-color: #D1FAE5;
+            color: #065F46;
+        }
+
+        .status-badge.investigate {
+            background-color: #FEF3C7;
+            color: #92400E;
+        }
+
+        .status-badge.action-needed {
+            background-color: #FEE2E2;
+            color: #991B1B;
+        }
+
+        .status-badge.hold {
+            background-color: #F3F4F6;
+            color: #4B5563;
+        }
+
+        /* Multiplier display */
+        .multiplier-value {
+            font-weight: 700;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .multiplier-value.high { color: var(--goal-brand); }
+        .multiplier-value.low { color: var(--warning-red); }
+        .multiplier-value.normal { color: var(--goal-text); }
+
+        /* Source table footer / summary row */
+        .source-table tfoot td {
+            padding: 12px;
+            font-weight: 700;
+            color: var(--goal-text);
+            border-top: 2px solid var(--border-gray);
+            background-color: var(--goal-light-grey);
+        }
+
+        /* ===================================================
+           RECOMMENDATION CARDS
+           For displaying bid optimization recommendations
+           with current vs. recommended multipliers
+           =================================================== */
+        .rec-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+
+        .rec-card {
+            background: var(--white);
+            border: 1px solid var(--border-gray);
+            border-radius: 8px;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Left accent border for action type */
+        .rec-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+        }
+
+        .rec-card.increase::before { background-color: var(--goal-brand); }
+        .rec-card.decrease::before { background-color: var(--warning-orange); }
+        .rec-card.investigate::before { background-color: var(--warning-red); }
+        .rec-card.hold::before { background-color: var(--success-green); }
+
+        .rec-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+
+        .rec-source-name {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--goal-text);
+            max-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .rec-action-badge {
+            padding: 3px 10px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .rec-action-badge.increase {
+            background-color: #DBEAFE;
+            color: #1E40AF;
+        }
+
+        .rec-action-badge.decrease {
+            background-color: #FEF3C7;
+            color: #92400E;
+        }
+
+        .rec-action-badge.investigate {
+            background-color: #FEE2E2;
+            color: #991B1B;
+        }
+
+        .rec-action-badge.hold {
+            background-color: #D1FAE5;
+            color: #065F46;
+        }
+
+        /* Current vs. Recommended multiplier comparison */
+        .rec-multiplier-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .rec-multiplier-block {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            border-radius: 6px;
+        }
+
+        .rec-multiplier-block.current {
+            background-color: var(--goal-light-grey);
+            border: 1px solid var(--border-gray);
+        }
+
+        .rec-multiplier-block.recommended {
+            background-color: #EFF6FF;
+            border: 1px solid #BFDBFE;
+        }
+
+        .rec-multiplier-block.recommended.decrease-bg {
+            background-color: #FFFBEB;
+            border: 1px solid #FDE68A;
+        }
+
+        .rec-multiplier-label {
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--neutral-gray);
+            margin-bottom: 4px;
+        }
+
+        .rec-multiplier-value {
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .rec-multiplier-value.current { color: var(--neutral-gray); }
+        .rec-multiplier-value.recommended { color: var(--goal-brand); }
+        .rec-multiplier-value.recommended.decrease { color: var(--warning-orange); }
+
+        .rec-arrow {
+            font-size: 20px;
+            color: var(--light-gray);
+            flex-shrink: 0;
+        }
+
+        /* Effective bid and impact line */
+        .rec-detail-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6px 0;
+            font-size: 12px;
+        }
+
+        .rec-detail-label {
+            color: var(--neutral-gray);
+        }
+
+        .rec-detail-value {
+            font-weight: 600;
+            color: var(--goal-text);
+        }
+
+        .rec-detail-value.positive { color: var(--success-green); }
+        .rec-detail-value.negative { color: var(--warning-red); }
+
+        .rec-rationale {
+            font-size: 12px;
+            color: var(--neutral-gray);
+            line-height: 1.5;
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px solid var(--border-gray);
+        }
+
+        /* ===================================================
+           TREND TABLE
+           Monthly metrics with color-coded gap indicators
+           =================================================== */
+        .trend-table-container {
+            background: var(--white);
+            border: 1px solid var(--border-gray);
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 40px;
+            overflow-x: auto;
+        }
+
+        .trend-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        .trend-table thead th {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--neutral-gray);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 10px 12px;
+            text-align: right;
+            border-bottom: 2px solid var(--border-gray);
+        }
+
+        .trend-table thead th:first-child {
+            text-align: left;
+        }
+
+        .trend-table tbody td {
+            padding: 10px 12px;
+            text-align: right;
+            font-variant-numeric: tabular-nums;
+            border-bottom: 1px solid var(--border-gray);
+        }
+
+        .trend-table tbody td:first-child {
+            text-align: left;
+            font-weight: 600;
+            color: var(--goal-text);
+        }
+
+        .trend-table tbody tr.baseline-row {
+            background-color: var(--goal-light-grey);
+            font-weight: 600;
+        }
+
+        .trend-table tbody tr.gap-row td {
+            font-weight: 600;
+        }
+
+        .gap-positive { color: var(--success-green); }
+        .gap-negative { color: var(--warning-red); }
+        .gap-neutral { color: var(--neutral-gray); }
+
+        /* ===================================================
+           MARKET POSITION BAR
+           Visual position indicator for RightPricing data
+           =================================================== */
+        .position-bar-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .position-bar-track {
+            flex: 1;
+            height: 8px;
+            background: var(--bg-track);
+            border-radius: 4px;
+            position: relative;
+        }
+
+        .position-bar-fill {
+            height: 100%;
+            border-radius: 4px;
+            background: var(--goal-brand);
+        }
+
+        .position-bar-marker {
+            position: absolute;
+            top: -4px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--goal-brand);
+            border: 2px solid var(--white);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+            transform: translateX(-50%);
+        }
+
+        .position-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--neutral-gray);
+            white-space: nowrap;
+            min-width: 48px;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 32px 0 16px;
+            color: var(--neutral-gray);
+            font-size: 12px;
+        }
+
+        .footer-logo {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--goal-brand);
+            margin-bottom: 8px;
+        }
+
+        .footer-text {
+            color: var(--light-gray);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                padding: 20px;
+            }
+
+            .kpi-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .campaign-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .chart-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .table-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .funnel {
+                flex-direction: column;
+            }
+
+            .funnel-arrow {
+                transform: rotate(90deg);
+            }
+
+            .summary-header {
+                flex-direction: column;
+            }
+
+            .summary-text {
+                margin-right: 0;
+                margin-bottom: 16px;
+            }
+
+            .rec-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .source-table-container {
+                padding: 16px;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                padding: 20px;
+                font-size: 12px;
+            }
+
+            .source-table-container,
+            .rec-card,
+            .chart-card,
+            .funnel-container,
+            .metrics-table,
+            .summary-section {
+                break-inside: avoid;
+            }
+
+            .source-table tbody tr:hover {
+                background-color: transparent;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        
+<div class="section" style="margin-bottom: 32px;">
+  <div style="background: linear-gradient(135deg, #077BE5 0%, #00172D 100%); color: white; border-radius: 8px; padding: 36px 32px;">
+    <div style="font-size: 12px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; opacity: 0.7; margin-bottom: 16px;">GOAL PLATFORM · PERFORMANCE ANALYSIS</div>
+    <h1 style="font-size: 26px; font-weight: 700; margin-bottom: 8px; line-height: 1.3;">Supreme Choice Insurance — Home CA Campaign</h1>
+    <div style="display: flex; gap: 24px; margin-top: 20px; flex-wrap: wrap;">
+      <div style="font-size: 12px; opacity: 0.65;">Report Date <strong style="opacity: 1;">February 17, 2026</strong></div>
+      <div style="font-size: 12px; opacity: 0.65;">Account Manager <strong style="opacity: 1;">Tom Panos</strong></div>
+      <div style="font-size: 12px; opacity: 0.65;">Data Window <strong style="opacity: 1;">60 Days</strong></div>
+    </div>
+  </div>
+</div>
+
+<div class="section" style="margin-bottom: 32px;">
+  <div style="background: white; border: 1px solid #E5E7EB; border-radius: 8px; padding: 28px;">
+    <h2 style="font-size: 18px; font-weight: 700; color: #001020; margin-bottom: 16px;">The Short Version</h2>
+    <p style="font-size: 15px; line-height: 1.75; color: #4B5563; margin-bottom: 16px;">
+      Your California Home campaign experienced a performance dip driven by a <strong style="color: #001020;">sudden spike in competition</strong> across the CA homeowners insurance market. This was not caused by a platform issue, a lost provider, or a configuration error — it was a market-level event that affected multiple GOAL accounts simultaneously.
+    </p>
+    <p style="font-size: 15px; line-height: 1.75; color: #4B5563; margin-bottom: 16px;">
+      The data shows three things clearly: <strong style="color: #001020;">(1)</strong> the number of competitors bidding on CA Home insurance leads surged, likely driven by wildfire season; <strong style="color: #001020;">(2)</strong> your bid level was calibrated for the previous competitive environment and became insufficient; and <strong style="color: #001020;">(3)</strong> the bid adjustments already made are working — Feb 16 was your best day for position and impression share since the decline.
+    </p>
+    <p style="font-size: 15px; line-height: 1.75; color: #4B5563;">
+      Your Auto campaign — running on the same account, same platform, same time period — remained perfectly stable throughout. This confirms the issue is isolated to the CA Home insurance market, not the GOAL platform.
+    </p>
+  </div>
+</div>
+<div class="kpi-grid">
+    <div class="kpi-card">
+        <div class="kpi-value">11,558</div>
+        <div class="kpi-label">Market Searches (30d)</div>
+        <div class="kpi-comparison ">+93% vs prior 30 days (5,982)</div>
+    </div>
+    <div class="kpi-card">
+        <div class="kpi-value">2.44%</div>
+        <div class="kpi-label">Impression Share (30d)</div>
+        <div class="kpi-comparison negative">Down from 5.72%</div>
+    </div>
+    <div class="kpi-card">
+        <div class="kpi-value">106</div>
+        <div class="kpi-label">Leads Delivered (30d)</div>
+        <div class="kpi-comparison ">+31% vs prior 30d (81)</div>
+    </div>
+    <div class="kpi-card">
+        <div class="kpi-value">6.52</div>
+        <div class="kpi-label">Avg Auction Position</div>
+        <div class="kpi-comparison negative">Was ~5.3 in prior period</div>
+    </div>
+</div>
+
+<div class="section" style="margin-bottom: 32px;">
+  <div style="background: white; border: 1px solid #E5E7EB; border-radius: 8px; padding: 28px;">
+    <h2 style="font-size: 18px; font-weight: 700; color: #001020; margin-bottom: 24px;">What Caused the Performance Dip</h2>
+    <p style="font-size: 14px; color: #6B7280; margin-bottom: 24px;">Three factors combined to create the decline. Each is backed by the data below.</p>
+
+    <!-- Factor 1: Market Demand Surge -->
+    <div style="border: 2px solid #077BE5; border-radius: 8px; padding: 24px; margin-bottom: 20px; background: #F0F7FF;">
+      <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+        <div style="background: #077BE5; color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; flex-shrink: 0;">1</div>
+        <h3 style="font-size: 16px; font-weight: 700; color: #001020;">CA Home Market Demand Nearly Doubled</h3>
+      </div>
+      <p style="font-size: 14px; line-height: 1.7; color: #374151; margin-bottom: 12px;">
+        The number of consumers searching for California homeowners insurance jumped <strong>93%</strong> — from ~5,982 searches to 11,558 searches in a 30-day window. This surge is consistent with the California wildfire season driving increased homeowner insurance shopping.
+      </p>
+      <p style="font-size: 14px; line-height: 1.7; color: #374151;">
+        When market demand surges like this, more advertisers activate campaigns and existing competitors increase budgets to capture the opportunity. The result: more competition for every lead, higher clearing prices, and tighter auction dynamics.
+      </p>
+    </div>
+
+    <!-- Factor 2: Competitive Spike -->
+    <div style="border: 2px solid #EF4444; border-radius: 8px; padding: 24px; margin-bottom: 20px; background: #FEF2F2;">
+      <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+        <div style="background: #EF4444; color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; flex-shrink: 0;">2</div>
+        <h3 style="font-size: 16px; font-weight: 700; color: #001020;">A Competitive Spike Hit Multiple Accounts</h3>
+      </div>
+      <p style="font-size: 14px; line-height: 1.7; color: #374151; margin-bottom: 12px;">
+        GOAL's product team has confirmed that <strong>multiple accounts experienced zero-lead days during this period</strong> due to a spike of competition specifically in California. This was not isolated to your account — it was a market-wide event.
+      </p>
+      <p style="font-size: 14px; line-height: 1.7; color: #374151; margin-bottom: 12px;">
+        The data confirms this: your average cost-per-click on won auctions jumped <strong>34%</strong> (from $1.93 to $2.59 between week 1 and week 2), and your average position deteriorated from <strong>6.36 to 8.75</strong>. Both of these are classic indicators of intensified competitive pressure — not a platform malfunction.
+      </p>
+      <div style="background: white; border: 1px solid #FECACA; border-radius: 6px; padding: 14px 16px; margin-top: 12px;">
+        <p style="font-size: 13px; color: #991B1B; font-weight: 600; margin-bottom: 4px;">GOAL Product Team Confirmation</p>
+        <p style="font-size: 13px; color: #7F1D1D; font-style: italic;">"We had multiple accounts get zero leads that day and have confirmed there was no technical cause. The reason some accounts saw no leads was due to a spike of competition, specifically in California."</p>
+      </div>
+    </div>
+
+    <!-- Factor 3: Bid Positioning -->
+    <div style="border: 2px solid #F59E0B; border-radius: 8px; padding: 24px; background: #FFFBEB;">
+      <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+        <div style="background: #F59E0B; color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; flex-shrink: 0;">3</div>
+        <h3 style="font-size: 16px; font-weight: 700; color: #001020;">Your Bid Was Right for the Old Market — Not the New One</h3>
+      </div>
+      <p style="font-size: 14px; line-height: 1.7; color: #374151; margin-bottom: 12px;">
+        Your average bid during the decline was ~<strong>$1.77</strong>. This was competitive in the prior period when there were fewer advertisers. But as competition surged, the clearing price rose above your bid level on more and more auctions.
+      </p>
+      <p style="font-size: 14px; line-height: 1.7; color: #374151;">
+        Think of it like a real estate auction: your offer was strong last month, but this month there are twice as many buyers in the room. The house hasn't changed — the competitive landscape has. The bid adjustments we've already made (raising your base bid to $2.26 and adjusting tier multipliers) are the correct response, and the Feb 16 results confirm they're working.
+      </p>
+      <div style="background: white; border: 1px solid #FDE68A; border-radius: 6px; padding: 14px 16px; margin-top: 12px;">
+        <p style="font-size: 13px; color: #92400E; font-weight: 600; margin-bottom: 4px;">RightPricing Data Confirms the Gap</p>
+        <p style="font-size: 13px; color: #78350F; line-height: 1.6;">Market pricing data shows the minimum clearing price for a 3rd-position win on your two largest sources (Tier 1 and Tier 3) is <strong>$2.81–$3.00</strong>. Your adjusted base bid of $2.26 is still below this threshold, which explains why the recovery is underway but not yet complete. See our recommendations below for specific source-level pricing targets.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+<div class="section" style="margin-bottom: 32px;">
+  <div class="section-title">Week-over-Week Decline — Home CA</div>
+<div class="campaign-grid">
+    <div class="campaign-card">
+        <div class="campaign-header">
+            <div class="campaign-name">Feb 2–6 (Before Competitive Spike)</div>
+            <div class="campaign-badge green">Baseline Week</div>
+        </div>
+        <div class="campaign-metric-row">
+            <div class="campaign-metric-label">Searches</div>
+            <div class="campaign-metric-value-group">
+                <div class="campaign-metric-value">1,870</div>
+            </div>
+        </div>
+        <div class="campaign-metric-row">
+            <div class="campaign-metric-label">Impressions</div>
+            <div class="campaign-metric-value-group">
+                <div class="campaign-metric-value">49</div>
+            </div>
+        </div>
+        <div class="campaign-metric-row">
+            <div class="campaign-metric-label">Impression Share</div>
+            <div class="campaign-metric-value-group">
+                <div class="campaign-metric-value">2.62%</div>
+            </div>
+        </div>
+        <div class="campaign-metric-row">
+            <div class="campaign-metric-label">Win Rate</div>
+            <div class="campaign-metric-value-group">
+                <div class="campaign-metric-value">2.24%</div>
+            </div>
+        </div>
+        <div class="campaign-metric-row">
+            <div class="campaign-metric-label">Leads</div>
+            <div class="campaign-metric-value-group">
+                <div class="campaign-metric-value">38</div>
+            </div>
+        </div>
+        <div class="campaign-metric-row">
+            <div class="campaign-metric-label">Avg Position</div>
+            <div class="campaign-metric-value-group">
+                <div class="campaign-metric-value">6.36</div>
+            </div>
+        </div>
+        <div class="campaign-metric-row">
+            <div class="campaign-metric-label">Avg Bid</div>
+            <div class="campaign-metric-value-group">
+                <div class="campaign-metric-value">$1.77</div>
+            </div>
+        </div>
+        <div class="campaign-metric-row">
+            <div class="campaign-metric-label">CPC (when winning)</div>
+            <div class="campaign-metric-value-group">
+                <div class="campaign-metric-value">$1.93</div>
+            </div>
+        </div>
+    </div>
+    <div class="campaign-card">
+        <div class="campaign-header">
+            <div class="campaign-name">Feb 9–13 (During Competitive Spike)</div>
+            <div class="campaign-badge orange">Spike Week</div>
+        </div>
+        <div class="campaign-metric-row">
+            <div class="campaign-metric-label">Searches</div>
+            <div class="campaign-metric-value-group">
+                <div class="campaign-metric-value">4,032</div>
+                <span class="campaign-metric-comparison">was 1,870</span>
+                <span class="campaign-metric-change positive">+115.6%</span>
+            </div>
+        </div>
+        <div class="campaign-metric-row">
+            <div class="campaign-metric-label">Impressions</div>
+            <div class="campaign-metric-value-group">
+                <div class="campaign-metric-value">37</div>
+                <span class="campaign-metric-comparison">was 49</span>
+                <span class="campaign-metric-change negative">-24.5%</span>
+            </div>
+        </div>
+        <div class="campaign-metric-row">
+            <div class="campaign-metric-label">Impression Share</div>
+            <div class="campaign-metric-value-group">
+                <div class="campaign-metric-value">0.92%</div>
+                <span class="campaign-metric-comparison">was 2.62%</span>
+                <span class="campaign-metric-change negative">-64.9%</span>
+            </div>
+        </div>
+        <div class="campaign-metric-row">
+            <div class="campaign-metric-label">Win Rate</div>
+            <div class="campaign-metric-value-group">
+                <div class="campaign-metric-value">0.59%</div>
+                <span class="campaign-metric-comparison">was 2.24%</span>
+                <span class="campaign-metric-change negative">-73.7%</span>
+            </div>
+        </div>
+        <div class="campaign-metric-row">
+            <div class="campaign-metric-label">Leads</div>
+            <div class="campaign-metric-value-group">
+                <div class="campaign-metric-value">20</div>
+                <span class="campaign-metric-comparison">was 38</span>
+                <span class="campaign-metric-change negative">-47.4%</span>
+            </div>
+        </div>
+        <div class="campaign-metric-row">
+            <div class="campaign-metric-label">Avg Position</div>
+            <div class="campaign-metric-value-group">
+                <div class="campaign-metric-value">8.75</div>
+                <span class="campaign-metric-comparison">was 6.36</span>
+                <span class="campaign-metric-change negative">-37.6%</span>
+            </div>
+        </div>
+        <div class="campaign-metric-row">
+            <div class="campaign-metric-label">Avg Bid</div>
+            <div class="campaign-metric-value-group">
+                <div class="campaign-metric-value">$1.80</div>
+                <span class="campaign-metric-comparison">was $1.77</span>
+                <span class="campaign-metric-change positive">+1.7%</span>
+            </div>
+        </div>
+        <div class="campaign-metric-row">
+            <div class="campaign-metric-label">CPC (when winning)</div>
+            <div class="campaign-metric-value-group">
+                <div class="campaign-metric-value">$2.59</div>
+                <span class="campaign-metric-comparison">was $1.93</span>
+                <span class="campaign-metric-change positive">+34.2%</span>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<div class="section" style="margin-bottom: 32px;">
+  <div style="background: white; border: 1px solid #E5E7EB; border-radius: 8px; padding: 28px;">
+    <h2 style="font-size: 18px; font-weight: 700; color: #001020; margin-bottom: 8px;">Auto Campaign Data Supports Market Competition as the Cause</h2>
+    <p style="font-size: 14px; color: #6B7280; margin-bottom: 20px;">Same account, same time period, same platform. Auto stayed stable while Home declined — confirming this is a market issue, not a system issue.</p>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+      <div style="border: 2px solid #10B981; border-radius: 8px; padding: 20px; background: #F0FDF4;">
+        <div style="font-size: 14px; font-weight: 700; color: #065F46; margin-bottom: 12px;">✅ Auto — California</div>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <div style="display: flex; justify-content: space-between; font-size: 14px;"><span style="color: #6B7280;">Win Rate</span><strong style="color: #065F46;">1.23% → 1.23%</strong></div>
+          <div style="display: flex; justify-content: space-between; font-size: 14px;"><span style="color: #6B7280;">Avg Position</span><strong style="color: #065F46;">4.95 → 4.98</strong></div>
+          <div style="display: flex; justify-content: space-between; font-size: 14px;"><span style="color: #6B7280;">Imp Share</span><strong style="color: #065F46;">7.13% → 6.49%</strong></div>
+          <div style="display: flex; justify-content: space-between; font-size: 14px;"><span style="color: #6B7280;">Leads</span><strong style="color: #065F46;">16 → 35 (+119%)</strong></div>
+        </div>
+        <div style="margin-top: 12px; padding: 8px 12px; background: #D1FAE5; border-radius: 6px; font-size: 12px; color: #065F46; font-weight: 600;">Stable performance — no issues detected</div>
+      </div>
+      <div style="border: 2px solid #EF4444; border-radius: 8px; padding: 20px; background: #FEF2F2;">
+        <div style="font-size: 14px; font-weight: 700; color: #991B1B; margin-bottom: 12px;">⚠️ Home — California</div>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <div style="display: flex; justify-content: space-between; font-size: 14px;"><span style="color: #6B7280;">Win Rate</span><strong style="color: #991B1B;">~1.6% → 1.15%</strong></div>
+          <div style="display: flex; justify-content: space-between; font-size: 14px;"><span style="color: #6B7280;">Avg Position</span><strong style="color: #991B1B;">~5.3 → 6.52</strong></div>
+          <div style="display: flex; justify-content: space-between; font-size: 14px;"><span style="color: #6B7280;">Imp Share</span><strong style="color: #991B1B;">5.72% → 2.44%</strong></div>
+          <div style="display: flex; justify-content: space-between; font-size: 14px;"><span style="color: #6B7280;">Leads</span><strong style="color: #991B1B;">81 → 106 (+31%)</strong></div>
+        </div>
+        <div style="margin-top: 12px; padding: 8px 12px; background: #FEE2E2; border-radius: 6px; font-size: 12px; color: #991B1B; font-weight: 600;">Competitive pressure — bid recalibration needed</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section" style="margin-bottom: 32px;">
+  <div style="background: white; border: 1px solid #E5E7EB; border-radius: 8px; padding: 28px;">
+    <h2 style="font-size: 18px; font-weight: 700; color: #001020; margin-bottom: 4px;">Daily Lead Consistency — Home CA</h2>
+    <p style="font-size: 14px; color: #6B7280; margin-bottom: 24px;">How many leads were delivered each day, compared to your baseline average</p>
+    
+    <div style="overflow-x: auto;">
+      <svg viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg" style="width: 100%; max-width: 800px; height: auto;">
+<style>text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }</style>
+<line x1="70" y1="240.0" x2="740" y2="240.0" stroke="#E5E7EB" stroke-width="1"/>
+<text x="60" y="244.0" text-anchor="end" font-size="11" fill="#9CA3AF">0</text>
+<line x1="70" y1="196.0" x2="740" y2="196.0" stroke="#E5E7EB" stroke-width="1"/>
+<text x="60" y="200.0" text-anchor="end" font-size="11" fill="#9CA3AF">2</text>
+<line x1="70" y1="152.0" x2="740" y2="152.0" stroke="#E5E7EB" stroke-width="1"/>
+<text x="60" y="156.0" text-anchor="end" font-size="11" fill="#9CA3AF">4</text>
+<line x1="70" y1="108.0" x2="740" y2="108.0" stroke="#E5E7EB" stroke-width="1"/>
+<text x="60" y="112.0" text-anchor="end" font-size="11" fill="#9CA3AF">6</text>
+<line x1="70" y1="64.0" x2="740" y2="64.0" stroke="#E5E7EB" stroke-width="1"/>
+<text x="60" y="68.0" text-anchor="end" font-size="11" fill="#9CA3AF">8</text>
+<line x1="70" y1="20.0" x2="740" y2="20.0" stroke="#E5E7EB" stroke-width="1"/>
+<text x="60" y="24.0" text-anchor="end" font-size="11" fill="#9CA3AF">10</text>
+
+<line x1="70" y1="72.80000000000001" x2="750" y2="72.80000000000001" stroke="#077BE5" stroke-width="2" stroke-dasharray="6,4" opacity="0.5"/>
+
+<text x="755" y="76.80000000000001" font-size="11" fill="#077BE5" font-weight="600">Avg: 7.6/day</text>
+
+<rect x="80" y="72.80000000000001" width="60" height="167.2" rx="4" fill="#077BE5" opacity="0.85"/>
+<text x="110.0" y="64.80000000000001" text-anchor="middle" font-size="14" font-weight="700" fill="#077BE5">7.6</text>
+<rect x="170" y="86.0" width="60" height="154.0" rx="4" fill="#077BE5" opacity="0.85"/>
+<text x="200.0" y="78.0" text-anchor="middle" font-size="14" font-weight="700" fill="#077BE5">7</text>
+<rect x="260" y="86.0" width="60" height="154.0" rx="4" fill="#077BE5" opacity="0.85"/>
+<text x="290.0" y="78.0" text-anchor="middle" font-size="14" font-weight="700" fill="#077BE5">7</text>
+<rect x="350" y="218.0" width="60" height="22.0" rx="4" fill="#EF4444" opacity="0.85"/>
+<text x="380.0" y="210.0" text-anchor="middle" font-size="14" font-weight="700" fill="#EF4444">1</text>
+<rect x="440" y="196.0" width="60" height="44.0" rx="4" fill="#F59E0B" opacity="0.85"/>
+<text x="470.0" y="188.0" text-anchor="middle" font-size="14" font-weight="700" fill="#F59E0B">2</text>
+<rect x="530" y="196.0" width="60" height="44.0" rx="4" fill="#F59E0B" opacity="0.85"/>
+<text x="560.0" y="188.0" text-anchor="middle" font-size="14" font-weight="700" fill="#F59E0B">2</text>
+<rect x="620" y="86.0" width="60" height="154.0" rx="4" fill="#10B981" opacity="0.85"/>
+<text x="650.0" y="78.0" text-anchor="middle" font-size="14" font-weight="700" fill="#10B981">7</text>
+
+<text x="110.0" y="258" text-anchor="middle" font-size="11" fill="#6B7280">Feb 2–6</text>
+<text x="110.0" y="272" text-anchor="middle" font-size="11" fill="#6B7280">(avg/day)</text>
+<text x="200.0" y="258" text-anchor="middle" font-size="11" fill="#6B7280">Feb 9</text>
+<text x="290.0" y="258" text-anchor="middle" font-size="11" fill="#6B7280">Feb 10</text>
+<text x="380.0" y="258" text-anchor="middle" font-size="11" fill="#6B7280">Feb 11</text>
+<text x="470.0" y="258" text-anchor="middle" font-size="11" fill="#6B7280">Feb 12</text>
+<text x="560.0" y="258" text-anchor="middle" font-size="11" fill="#6B7280">Feb 13</text>
+<text x="650.0" y="258" text-anchor="middle" font-size="11" fill="#6B7280">Feb 16</text>
+
+
+<text x="380.0" y="295" text-anchor="middle" font-size="11" fill="#EF4444" font-weight="600">← Competitive Spike →</text>
+<rect x="345" y="15" width="70" height="235" rx="6" fill="none" stroke="#EF4444" stroke-width="2" stroke-dasharray="4,3" opacity="0.5"/>
+<text x="650.0" y="295" text-anchor="middle" font-size="11" fill="#10B981" font-weight="600">Recovery ↑</text>
+
+</svg>
+    </div>
+
+    <div style="display: flex; gap: 20px; margin-top: 20px; flex-wrap: wrap;">
+      <div style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: #6B7280;">
+        <div style="width: 12px; height: 12px; border-radius: 3px; background: #077BE5;"></div> Normal / Baseline
+      </div>
+      <div style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: #6B7280;">
+        <div style="width: 12px; height: 12px; border-radius: 3px; background: #EF4444;"></div> Competitive Spike Day
+      </div>
+      <div style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: #6B7280;">
+        <div style="width: 12px; height: 12px; border-radius: 3px; background: #F59E0B;"></div> Below Average
+      </div>
+      <div style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: #6B7280;">
+        <div style="width: 12px; height: 12px; border-radius: 3px; background: #10B981;"></div> Recovery (Post-Adjustment)
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section" style="margin-bottom: 32px;">
+  <div style="background: white; border: 1px solid #E5E7EB; border-radius: 8px; padding: 28px; overflow-x: auto;">
+    <h2 style="font-size: 18px; font-weight: 700; color: #001020; margin-bottom: 20px;">Daily Performance Detail — Home CA</h2>
+    <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+      <thead>
+        <tr style="border-bottom: 2px solid #E5E7EB;">
+          <th style="text-align: left; padding: 10px 12px; font-size: 11px; font-weight: 600; color: #6B7280; text-transform: uppercase;">Day</th>
+          <th style="text-align: right; padding: 10px 12px; font-size: 11px; font-weight: 600; color: #6B7280; text-transform: uppercase;">Searches</th>
+          <th style="text-align: right; padding: 10px 12px; font-size: 11px; font-weight: 600; color: #6B7280; text-transform: uppercase;">Impr</th>
+          <th style="text-align: right; padding: 10px 12px; font-size: 11px; font-weight: 600; color: #6B7280; text-transform: uppercase;">Win Rate</th>
+          <th style="text-align: right; padding: 10px 12px; font-size: 11px; font-weight: 600; color: #6B7280; text-transform: uppercase;">Leads</th>
+          <th style="text-align: right; padding: 10px 12px; font-size: 11px; font-weight: 600; color: #6B7280; text-transform: uppercase;">Avg Bid</th>
+          <th style="text-align: right; padding: 10px 12px; font-size: 11px; font-weight: 600; color: #6B7280; text-transform: uppercase;">Avg Pos</th>
+          <th style="text-align: right; padding: 10px 12px; font-size: 11px; font-weight: 600; color: #6B7280; text-transform: uppercase;">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="background: #F8F9FC; font-weight: 600;">
+          <td style="padding: 10px 12px; font-weight: 600;">Feb 2–6 (wk avg)</td>
+          <td style="padding: 10px 12px; text-align: right;">1,870</td>
+          <td style="padding: 10px 12px; text-align: right;">49</td>
+          <td style="padding: 10px 12px; text-align: right;">2.24%</td>
+          <td style="padding: 10px 12px; text-align: right;">38</td>
+          <td style="padding: 10px 12px; text-align: right;">$1.77</td>
+          <td style="padding: 10px 12px; text-align: right;">6.36</td>
+          <td style="padding: 10px 12px; text-align: right;"><span style="display: inline-block; padding: 2px 10px; border-radius: 10px; font-size: 11px; font-weight: 600; background: #D1FAE5; color: #065F46;">Baseline</span></td>
+        </tr>
+        <tr>
+          <td style="padding: 10px 12px; font-weight: 600;">Mon, Feb 9</td>
+          <td style="padding: 10px 12px; text-align: right;">638</td>
+          <td style="padding: 10px 12px; text-align: right;">8</td>
+          <td style="padding: 10px 12px; text-align: right;">1.25%</td>
+          <td style="padding: 10px 12px; text-align: right;">7</td>
+          <td style="padding: 10px 12px; text-align: right;">$1.77</td>
+          <td style="padding: 10px 12px; text-align: right;">9.08</td>
+          <td style="padding: 10px 12px; text-align: right;"><span style="display: inline-block; padding: 2px 10px; border-radius: 10px; font-size: 11px; font-weight: 600; background: #EFF6FF; color: #1E40AF;">On Track</span></td>
+        </tr>
+        <tr>
+          <td style="padding: 10px 12px; font-weight: 600;">Tue, Feb 10</td>
+          <td style="padding: 10px 12px; text-align: right;">786</td>
+          <td style="padding: 10px 12px; text-align: right;">10</td>
+          <td style="padding: 10px 12px; text-align: right;">1.01%</td>
+          <td style="padding: 10px 12px; text-align: right;">7</td>
+          <td style="padding: 10px 12px; text-align: right;">$1.73</td>
+          <td style="padding: 10px 12px; text-align: right;">10.22</td>
+          <td style="padding: 10px 12px; text-align: right;"><span style="display: inline-block; padding: 2px 10px; border-radius: 10px; font-size: 11px; font-weight: 600; background: #EFF6FF; color: #1E40AF;">On Track</span></td>
+        </tr>
+        <tr style="background: #FEF2F2;">
+          <td style="padding: 10px 12px; font-weight: 600;">Wed, Feb 11</td>
+          <td style="padding: 10px 12px; text-align: right;">921</td>
+          <td style="padding: 10px 12px; text-align: right;">4</td>
+          <td style="padding: 10px 12px; text-align: right;color: #EF4444; font-weight: 700;">0.10%</td>
+          <td style="padding: 10px 12px; text-align: right;color: #EF4444; font-weight: 700;">1</td>
+          <td style="padding: 10px 12px; text-align: right;">$1.73</td>
+          <td style="padding: 10px 12px; text-align: right;">9.56</td>
+          <td style="padding: 10px 12px; text-align: right;"><span style="display: inline-block; padding: 2px 10px; border-radius: 10px; font-size: 11px; font-weight: 600; background: #FEE2E2; color: #991B1B;">Spike Day</span></td>
+        </tr>
+        <tr>
+          <td style="padding: 10px 12px; font-weight: 600;">Thu, Feb 12</td>
+          <td style="padding: 10px 12px; text-align: right;">790</td>
+          <td style="padding: 10px 12px; text-align: right;">8</td>
+          <td style="padding: 10px 12px; text-align: right;">0.37%</td>
+          <td style="padding: 10px 12px; text-align: right;">2</td>
+          <td style="padding: 10px 12px; text-align: right;">$2.04</td>
+          <td style="padding: 10px 12px; text-align: right;">6.69</td>
+          <td style="padding: 10px 12px; text-align: right;"><span style="display: inline-block; padding: 2px 10px; border-radius: 10px; font-size: 11px; font-weight: 600; background: #FEF3C7; color: #92400E;">Below Avg</span></td>
+        </tr>
+        <tr>
+          <td style="padding: 10px 12px; font-weight: 600;">Fri, Feb 13</td>
+          <td style="padding: 10px 12px; text-align: right;">790</td>
+          <td style="padding: 10px 12px; text-align: right;">8</td>
+          <td style="padding: 10px 12px; text-align: right;">0.37%</td>
+          <td style="padding: 10px 12px; text-align: right;">2</td>
+          <td style="padding: 10px 12px; text-align: right;">$2.04</td>
+          <td style="padding: 10px 12px; text-align: right;">6.69</td>
+          <td style="padding: 10px 12px; text-align: right;"><span style="display: inline-block; padding: 2px 10px; border-radius: 10px; font-size: 11px; font-weight: 600; background: #FEF3C7; color: #92400E;">Below Avg</span></td>
+        </tr>
+        <tr style="background: #F0FDF4;">
+          <td style="padding: 10px 12px; font-weight: 600;">Mon, Feb 16</td>
+          <td style="padding: 10px 12px; text-align: right;">655</td>
+          <td style="padding: 10px 12px; text-align: right;">15</td>
+          <td style="padding: 10px 12px; text-align: right;">1.37%</td>
+          <td style="padding: 10px 12px; text-align: right;color: #10B981; font-weight: 700;">7</td>
+          <td style="padding: 10px 12px; text-align: right;">$2.35</td>
+          <td style="padding: 10px 12px; text-align: right;color: #10B981; font-weight: 700;">4.99</td>
+          <td style="padding: 10px 12px; text-align: right;"><span style="display: inline-block; padding: 2px 10px; border-radius: 10px; font-size: 11px; font-weight: 600; background: #D1FAE5; color: #065F46;">Recovery ✓</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="section" style="margin-bottom: 32px;">
+  <div style="background: #F0FDF4; border: 2px solid #10B981; border-radius: 8px; padding: 36px;">
+    <h2 style="font-size: 22px; font-weight: 700; color: #065F46; margin-bottom: 16px;">✅ The Fix Is Already Working</h2>
+    <p style="font-size: 15px; line-height: 1.75; color: #374151; margin-bottom: 20px;">
+      After the bid adjustments made on Feb 12 and Feb 16 (base bid raised to $2.26, Tier 1 multiplier to 104%, Tier 3 to 89%), <strong>Feb 16 was the best-performing day since the competitive spike began.</strong> Every key metric improved in a single day:
+    </p>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px; margin-bottom: 24px;">
+      <div style="background: white; border: 1px solid #BBF7D0; border-radius: 8px; padding: 20px; text-align: center;">
+        <div style="font-size: 36px; font-weight: 700; color: #10B981;">4.99</div>
+        <div style="font-size: 13px; color: #6B7280; margin-top: 4px;">Avg Position</div>
+        <div style="font-size: 12px; color: #10B981; font-weight: 600; margin-top: 6px;">Best in 2+ weeks</div>
+        <div style="font-size: 11px; color: #9CA3AF; margin-top: 2px;">was 8.75 during spike</div>
+      </div>
+      <div style="background: white; border: 1px solid #BBF7D0; border-radius: 8px; padding: 20px; text-align: center;">
+        <div style="font-size: 36px; font-weight: 700; color: #10B981;">2.29%</div>
+        <div style="font-size: 13px; color: #6B7280; margin-top: 4px;">Impression Share</div>
+        <div style="font-size: 12px; color: #10B981; font-weight: 600; margin-top: 6px;">Up 149% from spike week</div>
+        <div style="font-size: 11px; color: #9CA3AF; margin-top: 2px;">was 0.92% during spike</div>
+      </div>
+      <div style="background: white; border: 1px solid #BBF7D0; border-radius: 8px; padding: 20px; text-align: center;">
+        <div style="font-size: 36px; font-weight: 700; color: #10B981;">1.37%</div>
+        <div style="font-size: 13px; color: #6B7280; margin-top: 4px;">Win Rate</div>
+        <div style="font-size: 12px; color: #10B981; font-weight: 600; margin-top: 6px;">Up 132% from spike week</div>
+        <div style="font-size: 11px; color: #9CA3AF; margin-top: 2px;">was 0.59% during spike</div>
+      </div>
+      <div style="background: white; border: 1px solid #BBF7D0; border-radius: 8px; padding: 20px; text-align: center;">
+        <div style="font-size: 36px; font-weight: 700; color: #10B981;">7</div>
+        <div style="font-size: 13px; color: #6B7280; margin-top: 4px;">Leads (single day)</div>
+        <div style="font-size: 12px; color: #10B981; font-weight: 600; margin-top: 6px;">Back to baseline avg</div>
+        <div style="font-size: 11px; color: #9CA3AF; margin-top: 2px;">was 1 on spike day</div>
+      </div>
+    </div>
+    <div style="background: white; border: 1px solid #BBF7D0; border-radius: 8px; padding: 20px;">
+      <p style="font-size: 15px; color: #374151; line-height: 1.7; margin-bottom: 12px;">
+        This proves two things: <strong>(1)</strong> the auction system is functioning correctly — when bids increase, results improve immediately; and <strong>(2)</strong> the current bid levels are moving in the right direction.
+      </p>
+      <p style="font-size: 15px; color: #374151; line-height: 1.7;">
+        The recovery on Feb 16 is not a coincidence. Position improved by <strong>43%</strong>, impression share more than doubled, and lead volume returned to the pre-spike daily average. We will continue monitoring daily performance to confirm sustained recovery over the coming week.
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="section" style="margin-bottom: 32px;">
+  <div style="background: white; border: 1px solid #E5E7EB; border-radius: 8px; padding: 28px;">
+    <h2 style="font-size: 18px; font-weight: 700; color: #001020; margin-bottom: 8px;">Recommendations to Further Boost Lead Volume</h2>
+    <p style="font-size: 14px; color: #6B7280; margin-bottom: 24px;">Beyond the bid corrections already in place, here are three additional strategies — informed by real-time market pricing data — to increase your lead flow.</p>
+    <div style="display: flex; flex-direction: column; gap: 16px; margin-bottom: 24px;">
+
+      <!-- Rec 1: RightPricing Bid Calibration (data-driven) -->
+      <div style="border: 1px solid #BFDBFE; border-radius: 8px; padding: 24px; background: #F0F7FF;">
+        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+          <div style="background: #077BE5; color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; flex-shrink: 0;">1</div>
+          <h3 style="font-size: 16px; font-weight: 700; color: #001020;">Calibrate Bids to Current Market Clearing Prices</h3>
+        </div>
+        <p style="font-size: 14px; line-height: 1.7; color: #374151; margin-bottom: 16px;">
+          We've pulled the RightPricing report for CA Home and can now see exactly what it costs to win at each auction position, by source. The table below shows why your current bid of <strong>$2.26</strong> is still leaving volume on the table — and what it would take to consistently win at a target position.
+        </p>
+
+        <!-- RightPricing Data Table -->
+        <div style="overflow-x: auto; margin-bottom: 16px;">
+          <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+            <thead>
+              <tr style="border-bottom: 2px solid #BFDBFE;">
+                <th style="text-align: left; padding: 10px 12px; font-size: 11px; font-weight: 600; color: #1E40AF; text-transform: uppercase;">Source</th>
+                <th style="text-align: right; padding: 10px 12px; font-size: 11px; font-weight: 600; color: #1E40AF; text-transform: uppercase;">Impressions</th>
+                <th style="text-align: right; padding: 10px 12px; font-size: 11px; font-weight: 600; color: #1E40AF; text-transform: uppercase;">1st Pos</th>
+                <th style="text-align: right; padding: 10px 12px; font-size: 11px; font-weight: 600; color: #1E40AF; text-transform: uppercase;">2nd Pos</th>
+                <th style="text-align: right; padding: 10px 12px; font-size: 11px; font-weight: 600; color: #1E40AF; text-transform: uppercase;">3rd Pos</th>
+                <th style="text-align: right; padding: 10px 12px; font-size: 11px; font-weight: 600; color: #1E40AF; text-transform: uppercase;">Your Bid</th>
+                <th style="text-align: center; padding: 10px 12px; font-size: 11px; font-weight: 600; color: #1E40AF; text-transform: uppercase;">Gap</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom: 1px solid #E5E7EB;">
+                <td style="padding: 10px 12px; font-weight: 600;">Tier 3</td>
+                <td style="padding: 10px 12px; text-align: right;">5,404</td>
+                <td style="padding: 10px 12px; text-align: right;">$6.91</td>
+                <td style="padding: 10px 12px; text-align: right;">$3.24</td>
+                <td style="padding: 10px 12px; text-align: right; font-weight: 600;">$2.81</td>
+                <td style="padding: 10px 12px; text-align: right; color: #EF4444; font-weight: 600;">$2.01</td>
+                <td style="padding: 10px 12px; text-align: center;"><span style="background: #FEE2E2; color: #991B1B; padding: 2px 8px; border-radius: 8px; font-size: 11px; font-weight: 600;">−$0.80</span></td>
+              </tr>
+              <tr style="border-bottom: 1px solid #E5E7EB;">
+                <td style="padding: 10px 12px; font-weight: 600;">Tier 1</td>
+                <td style="padding: 10px 12px; text-align: right;">4,754</td>
+                <td style="padding: 10px 12px; text-align: right;">$4.47</td>
+                <td style="padding: 10px 12px; text-align: right;">$3.23</td>
+                <td style="padding: 10px 12px; text-align: right; font-weight: 600;">$3.00</td>
+                <td style="padding: 10px 12px; text-align: right; color: #EF4444; font-weight: 600;">$2.35</td>
+                <td style="padding: 10px 12px; text-align: center;"><span style="background: #FEE2E2; color: #991B1B; padding: 2px 8px; border-radius: 8px; font-size: 11px; font-weight: 600;">−$0.65</span></td>
+              </tr>
+              <tr style="border-bottom: 1px solid #E5E7EB;">
+                <td style="padding: 10px 12px; font-weight: 600;">Internal SEO</td>
+                <td style="padding: 10px 12px; text-align: right;">2,370</td>
+                <td style="padding: 10px 12px; text-align: right;">$12.81</td>
+                <td style="padding: 10px 12px; text-align: right; font-weight: 600;">$2.75</td>
+                <td style="padding: 10px 12px; text-align: right;">$3.62</td>
+                <td style="padding: 10px 12px; text-align: right; color: #F59E0B; font-weight: 600;">$2.26</td>
+                <td style="padding: 10px 12px; text-align: center;"><span style="background: #FEF3C7; color: #92400E; padding: 2px 8px; border-radius: 8px; font-size: 11px; font-weight: 600;">−$0.49</span></td>
+              </tr>
+              <tr style="border-bottom: 1px solid #E5E7EB;">
+                <td style="padding: 10px 12px; font-weight: 600;">Tier 2</td>
+                <td style="padding: 10px 12px; text-align: right;">1,262</td>
+                <td style="padding: 10px 12px; text-align: right;">$3.83</td>
+                <td style="padding: 10px 12px; text-align: right;">$3.62</td>
+                <td style="padding: 10px 12px; text-align: right; font-weight: 600;">$3.59</td>
+                <td style="padding: 10px 12px; text-align: right; color: #EF4444; font-weight: 600;">$2.26</td>
+                <td style="padding: 10px 12px; text-align: center;"><span style="background: #FEE2E2; color: #991B1B; padding: 2px 8px; border-radius: 8px; font-size: 11px; font-weight: 600;">−$1.33</span></td>
+              </tr>
+              <tr style="border-bottom: 1px solid #E5E7EB;">
+                <td style="padding: 10px 12px; font-weight: 600;">Prem. Referral</td>
+                <td style="padding: 10px 12px; text-align: right;">295</td>
+                <td style="padding: 10px 12px; text-align: right;">$4.31</td>
+                <td style="padding: 10px 12px; text-align: right;">$3.46</td>
+                <td style="padding: 10px 12px; text-align: right; font-weight: 600;">$2.90</td>
+                <td style="padding: 10px 12px; text-align: right; color: #EF4444; font-weight: 600;">$2.26</td>
+                <td style="padding: 10px 12px; text-align: center;"><span style="background: #FEE2E2; color: #991B1B; padding: 2px 8px; border-radius: 8px; font-size: 11px; font-weight: 600;">−$0.64</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="font-size: 12px; color: #6B7280; margin-bottom: 12px; font-style: italic;">Your Bid = base bid × tier multiplier. Gap = difference between your bid and 3rd position clearing price (or 2nd for Internal SEO where 2nd is cheaper than 3rd).</p>
+        <p style="font-size: 14px; line-height: 1.7; color: #374151;">
+          <strong>The takeaway:</strong> On your two highest-volume sources (Tier 3 and Tier 1, representing 59% of all CA Home impressions), you need to be bidding at least <strong>$2.81–$3.00</strong> just to clear 3rd position. Raising the base bid to the <strong>$3.00–$3.25 range</strong> with appropriate tier multipliers would put you in a position to consistently win 2nd–3rd position across the board, significantly increasing both impression share and lead volume.
+        </p>
+        <div style="display: flex; gap: 16px; flex-wrap: wrap; margin-top: 12px;">
+          <div style="font-size: 12px; color: #1E40AF; font-weight: 600; background: #DBEAFE; padding: 4px 12px; border-radius: 12px;">Data-driven bid targets</div>
+          <div style="font-size: 12px; color: #1E40AF; font-weight: 600; background: #DBEAFE; padding: 4px 12px; border-radius: 12px;">59% of market volume covered</div>
+        </div>
+      </div>
+
+      <!-- Rec 2: Source-Level Multipliers -->
+      <div style="border: 1px solid #BFDBFE; border-radius: 8px; padding: 24px; background: #F0F7FF;">
+        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+          <div style="background: #077BE5; color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; flex-shrink: 0;">2</div>
+          <h3 style="font-size: 16px; font-weight: 700; color: #001020;">Activate Source-Level Bid Multipliers</h3>
+        </div>
+        <p style="font-size: 14px; line-height: 1.7; color: #374151; margin-bottom: 12px;">
+          The RightPricing data reveals a wide range of clearing prices across sources — from $2.81 on Tier 3 to $12.81 on Internal SEO at first position. Rather than a one-size-fits-all bid, source-level multipliers let you bid aggressively on high-value, affordable sources (like Internal SEO at $2.75 for 2nd position) while avoiding overpaying on premium sources (Home Search at $22+ first position) where ROI may not justify the cost.
+        </p>
+        <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+          <div style="font-size: 12px; color: #1E40AF; font-weight: 600; background: #DBEAFE; padding: 4px 12px; border-radius: 12px;">Higher win rate on best sources</div>
+          <div style="font-size: 12px; color: #1E40AF; font-weight: 600; background: #DBEAFE; padding: 4px 12px; border-radius: 12px;">Efficient spend allocation</div>
+        </div>
+      </div>
+
+      <!-- Rec 3: Expand Targeting -->
+      <div style="border: 1px solid #BFDBFE; border-radius: 8px; padding: 24px; background: #F0F7FF;">
+        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+          <div style="background: #077BE5; color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; flex-shrink: 0;">3</div>
+          <h3 style="font-size: 16px; font-weight: 700; color: #001020;">Expand Geographic or Product Targeting</h3>
+        </div>
+        <p style="font-size: 14px; line-height: 1.7; color: #374151; margin-bottom: 12px;">
+          The CA Home market is currently running hot with elevated competition. One way to increase total lead volume without fighting the most competitive auctions is to evaluate whether adjacent markets — neighboring states, additional coverage types, or underserved zip codes within California — offer favorable auction dynamics with lower clearing prices. This can supplement your CA Home leads and stabilize overall volume.
+        </p>
+        <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+          <div style="font-size: 12px; color: #1E40AF; font-weight: 600; background: #DBEAFE; padding: 4px 12px; border-radius: 12px;">Diversify lead sources</div>
+          <div style="font-size: 12px; color: #1E40AF; font-weight: 600; background: #DBEAFE; padding: 4px 12px; border-radius: 12px;">Capitalize on less competitive auctions</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="section" style="margin-bottom: 32px;">
+  <div style="background: white; border: 1px solid #E5E7EB; border-radius: 8px; padding: 28px;">
+    <h2 style="font-size: 18px; font-weight: 700; color: #001020; margin-bottom: 16px;">What Happens Next</h2>
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; gap: 12px; align-items: flex-start;">
+        <div style="background: #077BE5; color: white; min-width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; flex-shrink: 0;">1</div>
+        <div>
+          <strong style="font-size: 14px; color: #001020;">Monitor the recovery trend</strong>
+          <p style="font-size: 13px; color: #6B7280; margin-top: 2px;">We'll track daily performance over the next 7 days to confirm Feb 16's improvement is sustained, not a one-day anomaly.</p>
+        </div>
+      </div>
+      <div style="display: flex; gap: 12px; align-items: flex-start;">
+        <div style="background: #077BE5; color: white; min-width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; flex-shrink: 0;">2</div>
+        <div>
+          <strong style="font-size: 14px; color: #001020;">Calibrate bids to the new market</strong>
+          <p style="font-size: 13px; color: #6B7280; margin-top: 2px;">We're pulling market pricing data (RightPricing report) to determine exactly where your bids need to be to consistently win at the position you want — no guessing, just data.</p>
+        </div>
+      </div>
+      <div style="display: flex; gap: 12px; align-items: flex-start;">
+        <div style="background: #077BE5; color: white; min-width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; flex-shrink: 0;">3</div>
+        <div>
+          <strong style="font-size: 14px; color: #001020;">Auto campaign: no changes needed</strong>
+          <p style="font-size: 13px; color: #6B7280; margin-top: 2px;">Auto is performing well and growing. We'll continue to monitor but no adjustments are warranted.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+        <div class="footer">
+            <div class="footer-logo">GOAL</div>
+            <div class="footer-text">Performance Marketing Platform · Client Performance Analysis · Confidential</div>
+            <div class="footer-text" style="margin-top: 8px; font-size: 11px;">All CVR metrics calculated based on Leads, not Clicks</div>
+        </div>
+    </div>
+</body>
+</html>
