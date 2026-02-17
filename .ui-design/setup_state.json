@@ -1,0 +1,18 @@
+{
+  "status": "complete",
+  "preset": "standard",
+  "colors": {
+    "primary": "#3B82F6",
+    "secondary": "#8B5CF6"
+  },
+  "color_modes": ["light", "dark", "system"],
+  "typography": {
+    "family": "system",
+    "scale": "1.25"
+  },
+  "spacing": "tailwind-compatible",
+  "radius": "subtle",
+  "output_formats": ["css", "tailwind", "typescript", "json"],
+  "started_at": "2026-02-17T00:00:00.000Z",
+  "completed_at": "2026-02-17T00:00:00.000Z"
+}
